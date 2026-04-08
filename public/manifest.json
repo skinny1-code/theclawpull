@@ -1,0 +1,15 @@
+{
+  "name": "CardClawCo",
+  "short_name": "CardClawCo",
+  "description": "Pull graded trading cards via an animated claw machine. Sports, Pokémon, Anime, NFT.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0C0C10",
+  "theme_color": "#0C0C10",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "categories": ["games", "entertainment"],
+  "screenshots": []
+}
