@@ -85,7 +85,7 @@ export default function Marketplace() {
   const canAfford = (l) => user && user.wallet_cents >= l.price_cents
 
   return (
-    <div style={{ minHeight:'100vh', background:'linear-gradient(160deg,#080c12 0%,#0a0f18 60%,#060a10 100%)', color:'#F0EDE6', fontFamily:"'Lato',sans-serif" }}>
+    <div style={{ minHeight:'100vh', paddingBottom:90, background:'linear-gradient(160deg,#080c12 0%,#0a0f18 60%,#060a10 100%)', color:'#F0EDE6', fontFamily:"'Lato',sans-serif" }}>
       <style>{'@import url(\'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap\')'}</style>
 
       {/* Toast */}

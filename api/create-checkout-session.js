@@ -31,7 +31,7 @@ export default withAuth(async (req, res) => {
       creditAmount: String(pack.credits),
       packId:       resolvedPackId,
     },
-    success_url: `${process.env.APP_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+    success_url: `${process.env.APP_URL}/payment/success?session_id={CHECKOUT_SESSION_ID}&pack_id=${resolvedPackId}`,
     cancel_url:  `${process.env.APP_URL}/store`,
   })
 

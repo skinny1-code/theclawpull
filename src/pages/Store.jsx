@@ -40,7 +40,7 @@ export default function Store() {
   const isNewUser = user && !user.is_first_pull_done
 
   return (
-    <div style={{ minHeight:'100vh', background:'linear-gradient(160deg,#0C0C10 0%,#0F0F16 55%,#0C0C10 100%)', color:'#F0EDE6' }}>
+    <div style={{ minHeight:'100vh', paddingBottom:90, background:'linear-gradient(160deg,#0C0C10 0%,#0F0F16 55%,#0C0C10 100%)', color:'#F0EDE6' }}>
       <div style={{ position:'fixed',top:'10%',left:'50%',transform:'translateX(-50%)',width:700,height:350,background:'radial-gradient(ellipse,rgba(201,168,76,0.05) 0%,transparent 65%)',pointerEvents:'none',zIndex:0 }}/>
 
       {/* Header */}

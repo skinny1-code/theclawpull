@@ -44,7 +44,7 @@ export default function Profile() {
   const TAB_A = { ...TAB, borderBottomColor:'#4F46E5', color:'#4F46E5', fontWeight:600 }
 
   return (
-    <div style={{ minHeight:'100vh', background:'#F9FAFB' }}>
+    <div style={{ minHeight:'100vh', paddingBottom:90, background:'#F9FAFB' }}>
       <style>{'@import url(\'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\')'}</style>
 
       {/* Header */}

@@ -10,7 +10,7 @@ export default withAuth(async (req, res) => {
     if (cached) return res.status(200).json(cached)
     const { data, error } = await db
       .from('users')
-      .select('id,clerk_id,email,credits,created_at,pull_streak,longest_streak,total_fmv_pulled,is_first_pull_done,coreclaw_pulls,premierclaw_pulls,ultraclaw_pulls,quantumclaw_pulls')
+      .select('id,clerk_id,email,credits,wallet_cents,created_at,pull_streak,longest_streak,total_fmv_pulled,is_first_pull_done,coreclaw_pulls,premierclaw_pulls,ultraclaw_pulls,quantumclaw_pulls')
       .eq('clerk_id', userId).single()
     if (error || !data) return res.status(404).json({ error: 'User not found' })
     await cacheSet(CACHE_KEYS.USER(userId), data, 30)
