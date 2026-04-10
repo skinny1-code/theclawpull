@@ -114,7 +114,7 @@ export default function Marketplace() {
             <div style={{ background:'rgba(255,255,255,0.03)',border:'1px solid rgba(255,255,255,0.07)',borderRadius:10,padding:'14px',marginBottom:20 }}>
               {[
                 ['You Pay',       `$${(buyTarget.price_cents/100).toFixed(2)}`,                                         '#F0EDE6'],
-                ['Processing Fee','8% (paid by seller)',                                                                'rgba(240,237,230,0.3)'],
+                ['Processing Fee','9.5% (paid by seller)',                                                                'rgba(240,237,230,0.3)'],
                 ['Your Wallet',   `$${walletDollars}`,                                                                  canAfford(buyTarget)?'#34D399':'#F87171'],
                 ['After Purchase', canAfford(buyTarget)?`$${((user.wallet_cents-buyTarget.price_cents)/100).toFixed(2)}`:'—', 'rgba(240,237,230,0.4)'],
               ].map(([l,v,c]) => (
@@ -163,12 +163,12 @@ export default function Marketplace() {
                   <span style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'#F0EDE6' }}>${parseFloat(listPrice).toFixed(2)}</span>
                 </div>
                 <div style={{ display:'flex',justifyContent:'space-between',padding:'8px 12px' }}>
-                  <span style={{ fontFamily:"'DM Mono',monospace",fontSize:9,color:'rgba(240,237,230,0.3)',letterSpacing:1 }}>8% PROCESSING FEE</span>
-                  <span style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'#F87171' }}>-${(parseFloat(listPrice)*0.08).toFixed(2)}</span>
+                  <span style={{ fontFamily:"'DM Mono',monospace",fontSize:9,color:'rgba(240,237,230,0.3)',letterSpacing:1 }}>9.5% PROCESSING FEE</span>
+                  <span style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:16,color:'#F87171' }}>-${(parseFloat(listPrice)*0.095).toFixed(2)}</span>
                 </div>
                 <div style={{ display:'flex',justifyContent:'space-between',padding:'8px 12px',background:'rgba(52,211,153,0.06)',border:'1px solid rgba(52,211,153,0.15)',borderRadius:8 }}>
                   <span style={{ fontFamily:"'DM Mono',monospace",fontSize:9,color:'#34D399',letterSpacing:1 }}>YOU RECEIVE</span>
-                  <span style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:18,fontWeight:600,color:'#34D399' }}>${(parseFloat(listPrice)*0.92).toFixed(2)}</span>
+                  <span style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:18,fontWeight:600,color:'#34D399' }}>${(parseFloat(listPrice)*0.905).toFixed(2)}</span>
                 </div>
               </div>
             )}
@@ -201,7 +201,7 @@ export default function Marketplace() {
 
           {/* How it works callout */}
           <div style={{ background:'rgba(255,255,255,0.02)',border:'1px solid rgba(255,255,255,0.05)',borderRadius:10,padding:'11px 14px',marginBottom:16,display:'flex',gap:20,flexWrap:'wrap' }}>
-            {[['↔ Swap','Get 65% FMV in your wallet'],['🏪 Sell','List for any price — you receive 92% (8% processing fee)'],['💳 Buy','Spend wallet balance on cards'],['🔄 Keep pulling','Reinvest wallet into more pulls']].map(([t,d])=>(
+            {[['↔ Swap','Get 65% FMV in your wallet'],['🏪 Sell','List for any price — you receive 90.5% (9.5% processing fee)'],['💳 Buy','Spend wallet balance on cards'],['🔄 Keep pulling','Reinvest wallet into more pulls']].map(([t,d])=>(
               <div key={t} style={{ display:'flex',gap:8,alignItems:'center',minWidth:0 }}>
                 <span style={{ fontFamily:"'DM Mono',monospace",fontSize:9,color:'#C9A84C',whiteSpace:'nowrap' }}>{t}</span>
                 <span style={{ fontFamily:"'Lato',sans-serif",fontSize:10,color:'rgba(240,237,230,0.3)' }}>{d}</span>
