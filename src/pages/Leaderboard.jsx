@@ -14,7 +14,7 @@ export default function Leaderboard() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    apiFetch('/api/leaderboard')
+    apiFetch('/api/engage?type=leaderboard')
       .then(d => setRows(d.leaderboard || []))
       .catch(() => {})
       .finally(() => setLoading(false))

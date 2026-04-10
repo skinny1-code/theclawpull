@@ -32,14 +32,14 @@ export default function OperatorDash({ adminUser, onLogout }) {
 
   const loadStats = useCallback(async () => {
     setStatsLoading(true)
-    try { const data = await apiFetch('/api/admin/stats'); setStats(data) }
+    try { const data = await apiFetch('/api/admin?type=stats'); setStats(data) }
     catch (err) { showToast(err.message, 'error') }
     finally { setStatsLoading(false) }
   }, [apiFetch])
 
   const loadPool = useCallback(async () => {
     setPoolLoading(true)
-    try { const { cards } = await apiFetch('/api/admin/cards'); setPool(cards || []) }
+    try { const { cards } = await apiFetch('/api/admin'); setPool(cards || []) }
     catch { /* silent */ }
     finally { setPoolLoading(false) }
   }, [apiFetch])
@@ -51,7 +51,7 @@ export default function OperatorDash({ adminUser, onLogout }) {
     if (!addForm.name || !addForm.fmv) { setFormMsg('Name and FMV are required.'); return }
     setAddLoading(true)
     try {
-      await apiFetch('/api/admin/cards', { method:'POST', body:{ ...addForm, fmv:parseInt(addForm.fmv), total_supply:1 } })
+      await apiFetch('/api/admin', { method:'POST', body:{ ...addForm, fmv:parseInt(addForm.fmv), total_supply:1 } })
       setAddForm({ name:'', sport:'Sports', fmv:'', rarity:'Rare', grade:'PSA 9', image_url:'' })
       setFormMsg('Card added to pool.')
       setTimeout(() => setFormMsg(''), 2500)
@@ -61,7 +61,7 @@ export default function OperatorDash({ adminUser, onLogout }) {
   }
 
   const removeCard = async (id) => {
-    try { await apiFetch('/api/admin/cards', { method:'DELETE', body:{ id } }); setPool(p => p.filter(c => c.id !== id)) }
+    try { await apiFetch('/api/admin', { method:'DELETE', body:{ id } }); setPool(p => p.filter(c => c.id !== id)) }
     catch (err) { showToast(err.message, 'error') }
   }
 

@@ -8,7 +8,7 @@ export default function DailyPull({ apiFetch, onClaimed }) {
 
   const load = async () => {
     try {
-      const data = await apiFetch('/api/daily')
+      const data = await apiFetch('/api/engage')
       setStatus(data)
     } catch {}
   }
@@ -18,7 +18,7 @@ export default function DailyPull({ apiFetch, onClaimed }) {
   const claim = async () => {
     setClaiming(true)
     try {
-      const data = await apiFetch('/api/daily', { method: 'POST' })
+      const data = await apiFetch('/api/engage', { method: 'POST' })
       setResult(data)
       setStatus(s => ({ ...s, available: false, streak: data.streak }))
       if (onClaimed) onClaimed(data)

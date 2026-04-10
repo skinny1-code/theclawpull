@@ -10,7 +10,7 @@ export default function LiveFeed({ apiFetch }) {
 
   const loadFeed = async () => {
     try {
-      const { feed: items } = await apiFetch('/api/feed')
+      const { feed: items } = await apiFetch('/api/engage?type=feed')
       setFeed(items || [])
     } catch {}
   }
