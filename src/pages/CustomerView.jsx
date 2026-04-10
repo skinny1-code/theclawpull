@@ -353,7 +353,7 @@ export default function CustomerView() {
       )}
 
       {/* SWAP MODAL */}
-      <Modal open={!!swapTarget} onClose={() => !actionLoading && setSwapTarget(null)} title="Swap Card" subtitle="Return to pool at 65% FMV" accentColor="rgba(56,189,248,0.25)">
+      <Modal open={!!swapTarget} onClose={() => !actionLoading && setSwapTarget(null)} title="Swap Card" subtitle="65% FMV → your wallet (use for pulls or cash out)" accentColor="rgba(56,189,248,0.25)">
         {swapTarget && (
           <>
             <div style={{ display:'flex',alignItems:'center',gap:14,marginBottom:20,padding:14,background:'rgba(255,255,255,0.03)',borderRadius:10,border:'1px solid rgba(255,255,255,0.06)' }}>

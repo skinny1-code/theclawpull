@@ -9,6 +9,7 @@ import Leaderboard from './pages/Leaderboard.jsx'
 import Marketplace from './pages/Marketplace.jsx'
 import Profile from './pages/Profile.jsx'
 import NotFound from './pages/NotFound.jsx'
+import Wallet from './pages/Wallet.jsx'
 import CoreClawPage    from './pages/tiers/CoreClawPage.jsx'
 import PremierClawPage from './pages/tiers/PremierClawPage.jsx'
 import UltraClawPage   from './pages/tiers/UltraClawPage.jsx'
@@ -64,6 +65,7 @@ export default function App() {
           <Route path="/profile"         element={<Profile />} />
           <Route path="/leaderboard"     element={<Leaderboard />} />
           <Route path="/payment/success" element={<PaymentSuccess />} />
+          <Route path="/wallet"         element={<Wallet />} />
           <Route path="/operator"        element={<AdminAuthGate><OperatorDash /></AdminAuthGate>} />
 
           {/* Dedicated tier landing pages */}
