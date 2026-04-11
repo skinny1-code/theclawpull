@@ -38,7 +38,7 @@ export default function BottomNav() {
         const active = pathname === t.path
         return (
           <button key={t.path} onClick={() => navigate(t.path)} style={{
-            flex:1, padding:'10px 4px 6px', background:'none', border:'none',
+            flex:1, padding:'10px 4px 6px', border:'none',
             cursor:'pointer', display:'flex', flexDirection:'column',
             alignItems:'center', gap:3, position:'relative',
             borderTop: active ? '2px solid #FCD34D' : '2px solid transparent', background: active ? 'rgba(245,158,11,0.06)' : 'none',

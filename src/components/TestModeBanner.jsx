@@ -49,7 +49,7 @@ export function TestPullButton({ tier, onGranted, style }) {
     if (!isSignedIn) return navigate('/sign-in')
     setLoading(true)
     try {
-      await apiFetch('/api/test-pull', { method:'POST', body:{ tier } })
+      await apiFetch('/api/user', { method:'POST', body:{ action:'test_grant', tier } })
       await refresh()
       if (onGranted) onGranted()
     } catch(err) {
