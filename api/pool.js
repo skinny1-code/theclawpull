@@ -1,8 +1,8 @@
-import { withAuth } from '../lib/auth.js'
 import { db } from '../lib/db.js'
 import { cacheGet, cacheSet, CACHE_KEYS } from '../lib/redis.js'
+import { withCors } from '../lib/cors.js'
 
-export default withAuth(async (req, res) => {
+export default withCors(async (req, res) => {
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' })
 
   const cached = await cacheGet(CACHE_KEYS.POOL)

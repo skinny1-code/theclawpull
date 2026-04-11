@@ -22,7 +22,7 @@ export default withAuth(async (req, res) => {
     const { data, error } = await db
       .from('users')
       .upsert({ clerk_id: userId, email: email || null }, { onConflict: 'clerk_id' })
-      .select('id,clerk_id,email,credits,created_at,pull_streak,coreclaw_pulls,premierclaw_pulls,ultraclaw_pulls,quantumclaw_pulls,is_first_pull_done')
+      .select('id,clerk_id,email,credits,wallet_cents,created_at,pull_streak,coreclaw_pulls,premierclaw_pulls,ultraclaw_pulls,quantumclaw_pulls,is_first_pull_done')
       .single()
     if (error) return res.status(500).json({ error: error.message })
     await cacheDel(CACHE_KEYS.USER(userId))

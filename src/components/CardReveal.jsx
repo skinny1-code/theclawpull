@@ -33,6 +33,7 @@ function Particle({ color, x, y, rotation, size, drift }) {
 }
 
 export default function CardReveal({ card, tier, onClose, onPullAgain, pullsLeft }) {
+  if (!card) return null
   const cfg = TIER_REVEAL[tier] || TIER_REVEAL.CoreClaw
   const [phase, setPhase] = useState('drumroll') // drumroll → reveal → celebrate
   const [particles, setParticles] = useState([])

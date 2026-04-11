@@ -53,8 +53,12 @@ export default function TierPage({ config }) {
       const result = await apiFetch('/api/pull', { method:'POST', body:{ tier: tierName } })
       await refresh()
       setReveal({ ...result.card, nft_token_id: result.vault?.nft_token_id, vault_id: result.vault?.id, total_pulls: result.card?.total_pulls })
-    } catch(err) { setError(err.message) }
-    finally { setPulling(false) }
+    } catch(err) {
+      setError(err.message)
+      setPulling(false)
+      throw err // re-throw so CasinoClawMachine can handle it
+    }
+    setPulling(false)
   }
 
   const { name, price, color, glow, badge, icon, packId, cards, bgTint, description, rarity } = config

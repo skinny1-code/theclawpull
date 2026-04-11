@@ -1,24 +1,36 @@
-import { withAuth } from '../lib/auth.js'
 import { db, rpc } from '../lib/db.js'
+import { cors } from '../lib/cors.js'
 import { cacheDel, CACHE_KEYS } from '../lib/redis.js'
 
-export default withAuth(async (req, res) => {
-  const { userId } = req.auth
-  const type = req.query?.type || req.url?.split('?type=')[1]?.split('&')[0]
+export default async function handler(req, res) {
+  if (cors(req, res)) return
 
-  // ── FEED ─────────────────────────────────────────────────────
+  const type = req.query?.type
+
+  // ── PUBLIC: feed + leaderboard ──────────────────────────────
   if (type === 'feed') {
     try { return res.status(200).json({ feed: await rpc('get_pull_feed', {}) || [] }) }
     catch { return res.status(200).json({ feed: [] }) }
   }
-
-  // ── LEADERBOARD ───────────────────────────────────────────────
   if (type === 'leaderboard') {
     try { return res.status(200).json({ leaderboard: await rpc('get_leaderboard', {}) || [] }) }
     catch { return res.status(200).json({ leaderboard: [] }) }
   }
 
-  // ── DAILY PULL ────────────────────────────────────────────────
+  // ── DAILY PULL (requires auth) ────────────────────────────────
+  const token = req.headers.authorization?.replace('Bearer ', '')
+  if (!token) return res.status(401).json({ error: 'No token provided' })
+
+  let userId
+  try {
+    const { createClerkClient } = await import('@clerk/backend')
+    const clerk = createClerkClient({ secretKey: process.env.CLERK_SECRET_KEY })
+    const payload = await clerk.verifyToken(token)
+    userId = payload.sub
+  } catch {
+    return res.status(401).json({ error: 'Invalid token' })
+  }
+
   if (req.method === 'GET') {
     const { data: user } = await db.from('users').select('last_daily_pull,pull_streak,longest_streak,credits').eq('clerk_id', userId).single()
     if (!user) return res.status(404).json({ error: 'User not found' })
@@ -49,4 +61,4 @@ export default withAuth(async (req, res) => {
   }
 
   return res.status(405).json({ error: 'Method not allowed' })
-})
+}
