@@ -24,7 +24,7 @@ lib/                    Shared server-side utilities
   db.js                 Supabase client (service key) + rpc() helper
   redis.js              Upstash client, cacheGet/Set/Del, rate limiters
   stripe.js             Stripe client + CREDIT_PACKS config
-  cors.js               CORS helpers
+  cors.js               CORS helpers (withCors, cors)
 src/
   main.jsx              ClerkProvider + BrowserRouter + ErrorBoundary entry
   App.jsx               Route definitions
@@ -44,18 +44,52 @@ public/                 PWA assets (manifest.json, favicon.svg)
 
 ## Development Commands
 
+First-time setup (run in order):
+
 ```bash
-npm install              # Install dependencies
-cp .env.example .env     # Configure secrets (fill in all values)
-npm run db:migrate       # Apply schema to Supabase (idempotent)
-npm run db:seed          # Seed 20 reference cards
-npm run dev              # Vite dev server → http://localhost:5173
+npm install              # 1. Install dependencies
+cp .env.example .env     # 2. Configure secrets (Clerk, Stripe, Supabase keys)
+npm run db:migrate       # 3. Apply schema to Supabase (idempotent)
+npm run db:seed          # 4. Seed 20 reference cards
+npm run dev              # 5. Start dev server → http://localhost:5173
+```
+
+Vite automatically proxies `/api/*` to `http://localhost:3001` — no separate API server process needed.
+
+Other commands:
+
+```bash
 npm run build            # Production build to dist/
 npm run preview          # Preview production build locally
 npm run lint             # ESLint on src/ (.js, .jsx)
 ```
 
-Dev proxy: Vite proxies `/api/*` requests to `http://localhost:3001` during development (configured in `vite.config.js`).
+## Common Tasks for AI Assistants
+
+**Adding a new authenticated API route:**
+1. Create `api/your-route.js`.
+2. Wrap with `withAuth` (or `withAdmin` for admin routes) — CORS is included automatically.
+3. Handle methods explicitly at the top.
+4. Use `rpc()` for any writes that touch multiple tables.
+
+**Adding a public API route (no auth):**
+1. Create `api/your-route.js`.
+2. Import and use `withCors` from `../lib/cors.js` instead of `withAuth`.
+
+**Adding a new page:**
+1. Create `src/pages/YourPage.jsx` as a functional component.
+2. Add a `<Route path="/your-path" element={<YourPage />} />` in `App.jsx`.
+3. Style with inline `style={{}}` objects; reference `RARITY_CFG`, `GS`, or color constants from `src/lib/constants.js`.
+
+**Existing features to be aware of:** The codebase includes marketplace (`/api/marketplace`), wallet/Stripe Connect payouts (`/api/wallet`), trade offers (`/api/trade`), daily pulls and leaderboard (`/api/engage`), and user profiles (`/api/profile`). All use `withAuth` except the public feed/leaderboard endpoints in `engage.js`.
+
+**Gotchas to avoid:**
+- Never expose `SUPABASE_SERVICE_KEY`, `CLERK_SECRET_KEY`, or `STRIPE_SECRET_KEY` to the frontend.
+- Never multi-step a pull/swap/credit — always use RPC for atomicity.
+- Always `cacheDel()` relevant keys after a mutation.
+- `withAuth` catches and formats all thrown errors — throw `Error` with a `.status` property rather than calling `res.status()` manually in error paths.
+- `VITE_*` env vars are baked into the frontend bundle at build time; changing them requires a rebuild.
+- No test framework is configured — verify changes manually in the browser at `http://localhost:5173`.
 
 ## Environment Variables
 
@@ -79,14 +113,15 @@ Upstash Redis (`UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN`) are server-
 
 All routes in `api/` are Vercel serverless functions:
 
-- **Auth:** Wrap every handler with `withAuth` or `withAdmin` from `lib/auth.js`. These HOFs verify the Clerk JWT, inject `req.auth = { userId, sessionId, claims }`, and set CORS headers automatically. `OPTIONS` preflight requests are handled automatically.
+- **Authenticated routes:** Wrap with `withAuth` or `withAdmin` from `lib/auth.js`. These HOFs verify the Clerk JWT, inject `req.auth = { userId, sessionId, claims }`, set CORS headers, and handle `OPTIONS` preflight automatically.
+- **Public routes (no auth):** Use `withCors` from `lib/cors.js` instead. Example: `api/pool.js` serves the card pool without requiring a token.
 - **Method routing:** Use `if (req.method !== 'POST') return res.status(405).json(...)` at the top.
 - **Rate limiting:** 10 pulls/min per user (`checkPullRateLimit`); 100 API calls/min globally. Returns `429` with `{ error: 'Too many pulls — slow down' }` on limit hit.
 - **Atomic DB ops:** Use `rpc('function_name', { params })` for transactional operations (pull, swap, credit). Never do multi-step mutations without an RPC wrapper.
 - **Error pattern:** Throw `Error` with a `.status` property; `withAuth` catches and responds automatically.
 
 ```javascript
-// Template for a new API route
+// Template — authenticated route
 import { withAuth } from '../lib/auth.js'
 import { db, rpc } from '../lib/db.js'
 
@@ -96,6 +131,14 @@ export default withAuth(async (req, res) => {
   // ... logic
   return res.status(200).json({ result })
 })
+
+// Template — public route
+import { withCors } from '../lib/cors.js'
+
+export default withCors(async (req, res) => {
+  if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' })
+  // ... logic
+})
 ```
 
 ### API Routes
@@ -103,13 +146,18 @@ export default withAuth(async (req, res) => {
 | Method | Route | Auth | Description |
 |--------|-------|------|-------------|
 | GET/POST | `/api/user` | User | Get/upsert user + credit balance |
-| GET | `/api/pool` | User | Active card pool (Redis-cached 60s) |
+| GET | `/api/pool` | Public | Active card pool (Redis-cached 60s) |
 | POST | `/api/pull` | User | Pull a card (rate-limited 10/min) |
 | GET/POST | `/api/vault` | User | Get vault; swap (65% FMV) or redeem |
 | POST | `/api/create-checkout-session` | User | Create Stripe Checkout Session |
 | POST | `/api/webhook/stripe` | Stripe sig | Credit user after payment |
-| GET/POST | `/api/admin` | Admin | Admin CRUD and stats |
-| POST | `/api/admin/set-role` | Admin | Set Clerk user role |
+| GET | `/api/engage?type=feed\|leaderboard` | Public | Live pull feed / leaderboard |
+| GET | `/api/engage?type=daily` | User (inline) | Claim daily pull + streak bonus |
+| GET/POST | `/api/marketplace` | User | Marketplace listings; buy a listing |
+| GET/POST | `/api/wallet` | User | Wallet balance; Stripe Connect payouts |
+| GET | `/api/profile` | User | User profile stats via RPC |
+| GET/POST/PATCH | `/api/trade` | User | Outgoing/incoming trade offers |
+| GET/POST/PUT/DELETE | `/api/admin?type=stats\|role\|cards` | Admin | Card CRUD, platform stats, role management |
 
 ## Frontend Architecture
 
@@ -147,7 +195,7 @@ await pull('CoreClaw')
 
 **Backend:** `lib/auth.js` verifies JWT via `verifyToken()`. Authorized parties: `APP_URL`, `https://cardclawco.vercel.app`, `http://localhost:5173`.
 
-**Admin role:** Stored in Clerk `publicMetadata.role`. Set in Clerk Dashboard → Users → Public Metadata: `{ "role": "admin" }`. The session token must include metadata — configure in Clerk Dashboard → Sessions → Edit session token: `{ "metadata": "{{user.public_metadata}}" }`.
+**Admin role:** Stored in Clerk `publicMetadata.role` as `{ "role": "admin" }`. The session token must include metadata — configure in Clerk Dashboard → Sessions → Edit session token: `{ "metadata": "{{user.public_metadata}}" }`.
 
 ```javascript
 // Backend admin check (withAdmin does this automatically)
@@ -185,6 +233,14 @@ Server always uses the service key (`SUPABASE_SERVICE_KEY`), which bypasses Row-
 | `do_redeem(p_clerk_id, p_vault_id)` | Mark burned, prepare NFT fulfillment |
 | `credit_user(p_clerk_id, p_session_id, ...)` | Add credits + log transaction (webhook) |
 | `log_pull_feed(...)` | Append to live pull feed |
+| `get_pull_feed()` | Fetch live pull feed (public) |
+| `get_leaderboard()` | Fetch leaderboard (public) |
+| `claim_daily_pull(p_clerk_id)` | Claim daily free pull + update streak |
+| `apply_streak_bonus(p_clerk_id, p_bonus)` | Apply streak bonus credits |
+| `get_user_profile(p_clerk_id)` | Full profile stats |
+| `do_buy_listing(p_buyer_clerk_id, p_listing_id)` | Buy card from marketplace |
+| `do_accept_trade(p_seller_clerk, p_offer_id)` | Accept incoming trade offer |
+| `get_pool_stats()`, `get_revenue_stats()`, `get_pull_stats()`, `get_vault_stats()`, `get_top_cards()`, `get_rarity_breakdown()`, `get_recent_pulls()` | Admin dashboard analytics (called in parallel in `api/admin.js`) |
 
 ## Caching Pattern
 
@@ -216,7 +272,7 @@ Cache keys: `pool:active_cards` (60s TTL), `` `user:${clerkId}` `` (30s), `` `va
 | QuantumClaw | `quantumclaw` | 500 | $500 |
 | CoreClaw (first pull) | `coreclaw_first` | 25 | $15 |
 
-**Rarity weights** (rolled in `api/pull.js::pickCardForTier`):
+**Rarity weights:**
 
 | Rarity | Roll | Color |
 |--------|------|-------|
@@ -256,32 +312,7 @@ bash scripts/setup-vercel-env.sh  # Sync .env secrets to Vercel
 ## Code Conventions
 
 - **ES modules** throughout — `"type": "module"` in `package.json`. Always include `.js` extension in relative imports (e.g., `import { db } from '../lib/db.js'`).
-- **Component files:** PascalCase (`Dashboard.jsx`, `ClawMachine.jsx`).
-- **Hook files:** camelCase with `use` prefix (`useApi.js`, `useUser.js`).
-- **Constants:** SCREAMING_SNAKE_CASE (`RARITY_CFG`, `TIER_COST`).
-- **API route files:** kebab-case (`create-checkout-session.js`).
-- **Indentation:** 2 spaces. Semicolons. Single quotes.
+- **Naming:** PascalCase components, `useX` hooks, SCREAMING_SNAKE_CASE constants, kebab-case API route files.
 - **No barrel files** — each file has a single default or named export.
 - **No TypeScript** — plain JavaScript throughout.
 - **Inline styles only** — no CSS modules, Tailwind, or styled-components.
-
-## Common Tasks for AI Assistants
-
-**Adding a new API route:**
-1. Create `api/your-route.js`.
-2. Wrap with `withAuth` (or `withAdmin` for admin routes) — CORS is included automatically.
-3. Handle methods explicitly at the top.
-4. Use `rpc()` for any writes that touch multiple tables.
-
-**Adding a new page:**
-1. Create `src/pages/YourPage.jsx` as a functional component.
-2. Add a `<Route path="/your-path" element={<YourPage />} />` in `App.jsx`.
-3. Style with inline `style={{}}` objects; reference `RARITY_CFG`, `GS`, or color constants from `src/lib/constants.js`.
-
-**Gotchas to avoid:**
-- Never expose `SUPABASE_SERVICE_KEY`, `CLERK_SECRET_KEY`, or `STRIPE_SECRET_KEY` to the frontend.
-- Never multi-step a pull/swap/credit — always use RPC for atomicity.
-- Always `cacheDel()` relevant keys after a mutation.
-- The `withAuth` wrapper catches and formats all thrown errors — throw `Error` with a `.status` property rather than manually calling `res.status()` in error paths.
-- `VITE_*` env vars are baked into the frontend bundle at build time; changing them requires a rebuild.
-- No test framework is configured — verify changes manually in the browser at `http://localhost:5173`.
