@@ -118,8 +118,8 @@ export default function CustomerView() {
       {/* Header */}
       <div style={{ padding:'16px 20px', borderBottom:'1px solid rgba(255,255,255,0.05)', position:'relative', zIndex:10, display:'flex', justifyContent:'space-between', alignItems:'center' }}>
         <div>
-          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:9, letterSpacing:6, color:'#C9A84C', marginBottom:2 }}>CARD CLAW CO</div>
-          <h1 className="gold-text" style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:24, fontWeight:600, letterSpacing:2, lineHeight:1 }}>CardClawCo™</h1>
+          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:9, letterSpacing:6, color:'#C9A84C', marginBottom:2 }}>THE CLAW PULL</div>
+          <h1 className="gold-text" style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:24, fontWeight:600, letterSpacing:2, lineHeight:1 }}>TheClawPull™</h1>
         </div>
         <div style={{ display:'flex', alignItems:'center', gap:10 }}>
           {isSignedIn ? (

@@ -46,7 +46,7 @@ export default function Store() {
       {/* Header */}
       <div style={{ padding:'28px 24px 20px', borderBottom:'1px solid rgba(255,255,255,0.05)', position:'relative', zIndex:1 }}>
         <button onClick={() => navigate('/')} style={{ background:'none',border:'none',color:'rgba(240,237,230,0.35)',fontFamily:"'Lato',sans-serif",fontSize:11,letterSpacing:2,cursor:'pointer',display:'flex',alignItems:'center',gap:6,marginBottom:16,padding:0 }}>← BACK</button>
-        <div style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:10,letterSpacing:6,color:'#C9A84C',marginBottom:5 }}>CARD CLAW CO</div>
+        <div style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:10,letterSpacing:6,color:'#C9A84C',marginBottom:5 }}>THE CLAW PULL</div>
         <h1 style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:32,fontWeight:600,color:'#F0EDE6',marginBottom:6 }}>Credit Store</h1>
         <div style={{ display:'flex',alignItems:'center',gap:16 }}>
           <p style={{ fontFamily:"'Lato',sans-serif",fontSize:11,color:'rgba(240,237,230,0.3)',letterSpacing:1 }}>1 Credit = 1 Pull = $1.00</p>

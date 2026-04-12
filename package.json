@@ -1,8 +1,8 @@
 {
-  "name": "cardclawco",
+  "name": "theclawpull",
   "version": "0.1.0",
   "private": true,
-  "description": "CardClawCo — Graded Card Pull Platform with animated claw machine, NFT-backed ownership, Stripe credits, and admin dashboard",
+  "description": "TheClawPull — Pull graded trading cards via an animated claw machine",
   "author": "RAWagon",
   "license": "UNLICENSED",
   "type": "module",

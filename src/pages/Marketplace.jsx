@@ -188,7 +188,7 @@ export default function Marketplace() {
           <button onClick={() => navigate('/')} style={{ background:'none',border:'none',color:'rgba(240,237,230,0.3)',fontSize:11,letterSpacing:2,cursor:'pointer',padding:0,marginBottom:16,fontFamily:"'Lato',sans-serif" }}>← BACK</button>
           <div style={{ display:'flex',justifyContent:'space-between',alignItems:'flex-end',marginBottom:20 }}>
             <div>
-              <div style={{ fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:4,color:'rgba(240,237,230,0.3)',marginBottom:4 }}>CARD CLAW CO</div>
+              <div style={{ fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:4,color:'rgba(240,237,230,0.3)',marginBottom:4 }}>THE CLAW PULL</div>
               <h1 style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:36,fontWeight:600,color:'#F0EDE6',margin:0 }}>Marketplace</h1>
             </div>
             {isSignedIn && user && (

@@ -63,7 +63,7 @@ export default function Profile() {
         {/* Profile header card */}
         <div style={{ background:'linear-gradient(135deg,#1E1B4B,#312E81)', borderRadius:16, padding:'24px 24px 20px', marginBottom:20, color:'#fff', position:'relative', overflow:'hidden' }}>
           <div style={{ position:'absolute', top:-40, right:-40, width:180, height:180, background:'rgba(255,255,255,0.04)', borderRadius:'50%' }}/>
-          <div style={{ fontFamily:"'Inter',sans-serif", fontSize:11, letterSpacing:2, color:'rgba(255,255,255,0.5)', marginBottom:8 }}>CARD CLAW CO · COLLECTOR</div>
+          <div style={{ fontFamily:"'Inter',sans-serif", fontSize:11, letterSpacing:2, color:'rgba(255,255,255,0.5)', marginBottom:8 }}>THE CLAW PULL · COLLECTOR</div>
           <div style={{ fontFamily:"'Inter',sans-serif", fontSize:22, fontWeight:700, color:'#fff', marginBottom:4 }}>
             {loading ? '···' : `Collector #${user?.clerk_id?.slice(-6)||'------'}`}
           </div>

@@ -78,7 +78,7 @@ export default function Wallet() {
       <div style={{ maxWidth:480, margin:'0 auto', padding:'36px 20px 80px' }}>
         <button onClick={() => navigate('/')} style={{ background:'none',border:'none',color:'rgba(240,237,230,0.3)',fontSize:11,letterSpacing:2,cursor:'pointer',padding:0,marginBottom:28,fontFamily:"'Lato',sans-serif" }}>← BACK</button>
 
-        <div style={{ fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:4,color:'rgba(240,237,230,0.3)',marginBottom:6 }}>CARD CLAW CO</div>
+        <div style={{ fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:4,color:'rgba(240,237,230,0.3)',marginBottom:6 }}>THE CLAW PULL</div>
         <h1 style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:40,fontWeight:600,color:'#F0EDE6',margin:'0 0 4px' }}>My Wallet</h1>
         <p style={{ fontFamily:"'Lato',sans-serif",fontSize:12,color:'rgba(240,237,230,0.35)',margin:'0 0 28px' }}>Earnings from card swaps & sales</p>
 

@@ -129,7 +129,7 @@ export default withAuth(async (req, res) => {
       const transfer = await stripe.transfers.create({
         amount: amount_cents, currency: 'usd',
         destination: user.stripe_connect_id,
-        description: 'CardClawCo wallet cashout',
+        description: 'TheClawPull wallet cashout',
         metadata: { payout_id: String(payout.id), clerk_id: userId },
       })
       await db.from('payouts').update({ status: 'paid', stripe_payout_id: transfer.id }).eq('id', payout.id)

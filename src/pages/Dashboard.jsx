@@ -58,7 +58,7 @@ export default function Dashboard() {
         <div style={{ display:'flex', width:'200%', animation:'marqueeScroll 12s linear infinite' }}>
           {[0,1].map(k=>(
             <div key={k} style={{ flex:'0 0 50%', display:'flex', gap:60 }}>
-              {['🎰 CARD CLAW CO','💎 PSA GRADED CARDS','🏆 NFT OWNERSHIP','💳 CASH OUT ANYTIME','🎯 65% SWAP VALUE','⚡ PULL NOW'].map((t,i)=>(
+              {['🎰 THE CLAW PULL','💎 PSA GRADED CARDS','🏆 NFT OWNERSHIP','💳 CASH OUT ANYTIME','🎯 65% SWAP VALUE','⚡ PULL NOW'].map((t,i)=>(
                 <span key={i} style={{ fontFamily:"'Oswald',sans-serif", fontSize:11, fontWeight:600, letterSpacing:2, color:'#FCD34D', whiteSpace:'nowrap' }}>{t}</span>
               ))}
             </div>
@@ -71,7 +71,7 @@ export default function Dashboard() {
         <div style={{ maxWidth:500, margin:'0 auto' }}>
           <div style={{ display:'flex', justifyContent:'space-between', alignItems:'center' }}>
             <div>
-              <div style={{ fontFamily:"'Oswald',sans-serif", fontSize:10, letterSpacing:6, color:'rgba(245,158,11,0.5)', marginBottom:2 }}>CARD CLAW CO</div>
+              <div style={{ fontFamily:"'Oswald',sans-serif", fontSize:10, letterSpacing:6, color:'rgba(245,158,11,0.5)', marginBottom:2 }}>THE CLAW PULL</div>
               <div style={{ fontFamily:"'Oswald',sans-serif", fontSize:32, fontWeight:700, color:'#FCD34D', letterSpacing:1, lineHeight:1, animation:'neonPulse 3s ease-in-out infinite' }}>
                 {isSignedIn ? 'WELCOME BACK' : 'PULL. WIN. COLLECT.'}
               </div>

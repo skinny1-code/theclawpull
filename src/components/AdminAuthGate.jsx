@@ -53,7 +53,7 @@ export default function AdminAuthGate({ admins, onSuccess }) {
               <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
             </svg>
           </div>
-          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:11, letterSpacing:5, color:'#C9A84C', marginBottom:6 }}>CARD CLAW CO</div>
+          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:11, letterSpacing:5, color:'#C9A84C', marginBottom:6 }}>THE CLAW PULL</div>
           <h2 style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:26, fontWeight:600, color:'#F0EDE6', lineHeight:1.2 }}>Operator Access</h2>
           <p style={{ fontFamily:"'Lato',sans-serif", fontSize:11, color:'rgba(240,237,230,0.3)', marginTop:6, letterSpacing:1 }}>RESTRICTED — AUTHORISED PERSONNEL ONLY</p>
         </div>

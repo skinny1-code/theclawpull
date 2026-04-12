@@ -8,11 +8,11 @@ export default function ShareButton({ card }) {
   const cfg = RARITY_CFG[card.rarity] || RARITY_CFG.Common
 
   const share = async () => {
-    const text = `🎰 Just pulled a ${card.rarity} ${card.card_name || card.name} (${card.grade}) worth $${(card.fmv||0).toLocaleString()} on CardClawCo!\n\nNFT: ${card.nft_token_id || ''}\n\nhttps://cardclawco.vercel.app`
+    const text = `🎰 Just pulled a ${card.rarity} ${card.card_name || card.name} (${card.grade}) worth $${(card.fmv||0).toLocaleString()} on TheClawPull!\n\nNFT: ${card.nft_token_id || ''}\n\nhttps://theclawpull.vercel.app`
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: 'CardClawCo Pull!', text })
+        await navigator.share({ title: 'TheClawPull Pull!', text })
         return
       } catch {}
     }

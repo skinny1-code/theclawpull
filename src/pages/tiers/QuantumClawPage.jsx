@@ -4,7 +4,7 @@ const CONFIG = {
   color:'#C9A84C', glow:'rgba(201,168,76,0.3)', bgTint:'#100e06',
   badge:'ULTIMATE TIER · $500', icon:'⚡',
   tagline:'Museum-grade. Investment-level. Legendary.',
-  description:'The most exclusive pull experience in CardClawCo. 500 credits to pull from a pool of the rarest cards on the platform — Michael Jordan Fleer RC, Pikachu Illustrator, LeBron Chrome RC, and more. Cards that belong in collections, not shelves.',
+  description:'The most exclusive pull experience in TheClawPull. 500 credits to pull from a pool of the rarest cards on the platform — Michael Jordan Fleer RC, Pikachu Illustrator, LeBron Chrome RC, and more. Cards that belong in collections, not shelves.',
   rarity:'INVESTMENT GRADE · $1,100–$4,200 FMV',
   cards:[
     { name:'Pikachu Illustrator',    grade:'PSA 7',  fmv:4200, img:'https://images.pokemontcg.io/basep/26_hires.png' },

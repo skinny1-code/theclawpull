@@ -50,7 +50,7 @@ export default function App() {
       <div style={{ minHeight:'100vh',background:'#080b10',display:'flex',alignItems:'center',justifyContent:'center' }}>
         <style>{GS}</style>
         <div style={{ textAlign:'center' }}>
-          <div style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:24,fontWeight:600,letterSpacing:4,color:'#C9A84C' }}>CARD CLAW CO</div>
+          <div style={{ fontFamily:"'Cormorant Garamond',serif",fontSize:24,fontWeight:600,letterSpacing:4,color:'#C9A84C' }}>THE CLAW PULL</div>
           <div style={{ marginTop:16,width:24,height:24,border:'2px solid rgba(201,168,76,0.3)',borderTopColor:'#C9A84C',borderRadius:'50%',animation:'spin360 0.8s linear infinite',margin:'16px auto 0' }}/>
         </div>
       </div>

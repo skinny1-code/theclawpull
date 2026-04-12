@@ -115,7 +115,7 @@ export default function ClawMachine({ poolSize=0, onPull, disabled, pulling }) {
 
         {/* Header */}
         <div style={{ textAlign:'center', paddingTop:22, paddingBottom:10, position:'relative', zIndex:5 }}>
-          <div className="gold-text" style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:15, letterSpacing:5, fontWeight:600 }}>CARD CLAW CO</div>
+          <div className="gold-text" style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:15, letterSpacing:5, fontWeight:600 }}>THE CLAW PULL</div>
           <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:3, color:'rgba(240,237,230,0.25)', marginTop:2 }}>GRADED CARD RETRIEVAL</div>
         </div>
 

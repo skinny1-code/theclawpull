@@ -11,7 +11,7 @@ export default class ErrorBoundary extends Component {
   }
 
   componentDidCatch(error, info) {
-    console.error('[CardClawCo Error Boundary]', error, info)
+    console.error('[TheClawPull Error Boundary]', error, info)
   }
 
   render() {

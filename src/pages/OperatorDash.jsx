@@ -83,7 +83,7 @@ export default function OperatorDash({ adminUser, onLogout }) {
       {/* ── Sidebar ── */}
       <div style={{ width:224, background:'#FAFAF8', borderRight:'1px solid #E8E5DF', display:'flex', flexDirection:'column', position:'fixed', top:0, bottom:0, left:0, zIndex:50 }}>
         <div style={{ padding:'24px 22px 18px', borderBottom:'1px solid #E8E5DF' }}>
-          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:9, letterSpacing:4, color:'#C9A84C', marginBottom:4 }}>CARD CLAW CO</div>
+          <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:9, letterSpacing:4, color:'#C9A84C', marginBottom:4 }}>THE CLAW PULL</div>
           <div style={{ fontFamily:"'Cormorant Garamond',serif", fontSize:20, fontWeight:600, lineHeight:1.15 }}>Operator<br/>Console</div>
         </div>
         <div style={{ padding:'12px 22px', borderBottom:'1px solid #E8E5DF', display:'flex', alignItems:'center', gap:9 }}>
